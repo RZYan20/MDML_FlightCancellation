@@ -155,10 +155,22 @@ flight_data <- flight_data %>%
   ungroup()
 
 #### Merge Scraped Data ####
-flight_data <- flight_data %>%
-  left_join(flight_score, by = c("month", "airline"))
+flight_score$score <- as.numeric(flight_score$score)
+flight_score_mean$month <- as.factor(flight_score_mean$month)
+flight_score$year <- as.factor(flight_score$year)
+
+merge_flight_data <- flight_data %>%
+  left_join(flight_score_mean, by = c("month", "year", "airline"))
+
+# replace missing score by quarterly mean score
+merge_flight_data$mean_score <- ifelse(is.na(merge_flight_data$mean_score),
+                                       flight_score_quarterly_mean$quarterly_mean_score[match(paste(merge_flight_data$quarter, merge_flight_data$year, merge_flight_data$airline), 
+                                                                                    paste(flight_score_quarterly_mean$quarter, flight_score_quarterly_mean$year, flight_score_quarterly_mean$airline))],
+                                       merge_flight_data$mean_score)
+flight_data <- merge_flight_data
+
 
 # Saving the dataset
-write.csv(flight_data, file = "data/fl_model_data.csv")
+write.csv(flight_data, file = "data/fl_model_data.csv", row.names = FALSE)
 
 
