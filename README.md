@@ -5,9 +5,10 @@ The team members of this project are: Kelly Xiao and Rongze Yan
 
 The file contains two subfile:
 
-scripts
-cleaning 
-web scrapping
-data exploration & feature engineering
+# scripts
+I. cleaning 
+II. web scrapping
+III. data exploration & feature engineering
+IV. model
 
-data
+# data
