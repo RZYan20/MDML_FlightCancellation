@@ -69,5 +69,5 @@ flight_data <- flight_data %>%
 
 
 # Saving the dataset
-write.csv(flight_data, file = "data/flight_data.csv")
+write.csv(flight_data, file = "data/flight_data.csv") 
 
